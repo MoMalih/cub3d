@@ -6,6 +6,18 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <math.h>
+#include "libft/libft.h"
+// #include "mlx/mlx.h"
+#include "get_next_line/get_next_line.h"
+
+// #define BUFFER_SIZE 1
+
+typedef struct s_map
+{
+    char    **map;
+    int     width;
+    int     height;
+}               t_map;
 
 typedef struct s_cube
 {
@@ -21,11 +33,8 @@ typedef struct s_cube
     int     map_height;
 }               t_cube;
 
-typedef struct s_map
-{
-    char    **map;
-    int     width;
-    int     height;
-}               t_map;
+void    parse_file(t_cube   *info);
+void    cub3d_error(char *msg);
+
 
 #endif 
