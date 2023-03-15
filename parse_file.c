@@ -104,6 +104,7 @@ void    parse_file(t_cube   *info)
         {
             // if (line[0] == 'R')
             //     parse_resolution(info, line);
+            printf("line: {%s}\n", line);
             if (line[0] == 'N' && line[1] == 'O')
                 parse_texture(line, &info->north);
             else if (line[0] == 'S' && line[1] == 'O')
@@ -119,8 +120,8 @@ void    parse_file(t_cube   *info)
             else if (line[0] == '1')
                 printf("map\n");
                 // parse_map(info, line);
-            else
-                cub3d_error("Invalid file");
+            // else
+            //     cub3d_error("Invalid file");
         }
         free(line);
     }

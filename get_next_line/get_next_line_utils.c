@@ -32,7 +32,7 @@ char	*f_strchr(char *s, int c)
 	if (!s)
 		return (0);
 	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
+		return ((char *)&s[f_strlen(s)]);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char) c)
@@ -55,7 +55,7 @@ char	*f_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = malloc((f_strlen(s1) + f_strlen(s2) + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	i = -1;
@@ -65,7 +65,7 @@ char	*f_strjoin(char *s1, char *s2)
 			str[i] = s1[i];
 	while (s2[c] != '\0')
 		str[i++] = s2[c++];
-	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	str[f_strlen(s1) + f_strlen(s2)] = '\0';
 	free(s1);
 	return (str);
 }
