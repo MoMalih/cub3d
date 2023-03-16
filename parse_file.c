@@ -54,42 +54,10 @@ void    parse_color(char *line, int *color)
     *color = (r << 16) | (g << 8) | b;
 }
 
-void    parse_map(t_cube *info, char *line)
-{
-    int     i;
-    int     j;
+// void    parse_map(t_cube *info, char *line)
+// {
 
-    i = 0;
-    while (line[i] && line[i] == ' ')
-        i++;
-    j = i;
-    while (line[j] && line[j] != ' ')
-        j++;
-    if (line[j])
-        cub3d_error("Invalid file");
-    if (!info->map)
-    {
-        info->map = malloc(sizeof(t_map));
-        if (!info->map)
-            cub3d_error("Malloc failed");
-        info->map->map = malloc(sizeof(char *));
-        if (!info->map->map)
-            cub3d_error("Malloc failed");
-        info->map->map[0] = ft_strdup(line + i);
-        info->map->width = ft_strlen(line + i);
-        info->map->height = 1;
-    }
-    else
-    {
-        info->map->map = ft_realloc(info->map->map,
-            sizeof(char *) * info->map->height,
-            sizeof(char *) * (info->map->height + 1));
-        if (!info->map->map)
-            cub3d_error("Malloc failed");
-        info->map->map[info->map->height] = ft_strdup(line + i);
-        info->map->height++;
-    }
-}
+// }
 
 void    parse_file(t_cube   *info)
 {
@@ -114,13 +82,11 @@ void    parse_file(t_cube   *info)
                 parse_color(line, &info->floor);
             else if (line[0] == 'C')
                 parse_color(line, &info->ceiling);
-            else if (line[0] == '1')
-                parse_map(info, line);
-                // printf("map\n");
-            
-            // else
-            //     cub3d_error("Invalid file");
+            // else if (line[0] == '1')
+                // parse_map(info, line);
         }
+        else if (line[0] != '\n')
+            cub3d_error("Invalid file");
         free(line);
     }
     // printf("NO {%s}\n", info->north);
