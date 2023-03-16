@@ -8,6 +8,7 @@ void    cub3d_error(char *msg)
         ft_putstr_fd(": ", 2);
         ft_putstr_fd(msg, 2);
     }
+    exit(1);
 }
 
 void    cub3d_parse(t_cube *info)
