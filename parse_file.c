@@ -62,17 +62,56 @@ void    parse_color(char *line, int *color)
     *color = (r << 16) | (g << 8) | b;
 }
 
-// void    parse_map(t_cube *info, char *line)
-// {
+void    parse_map(t_cube *info, char *line, int it)
+{
+    int     i;
+    int     j;
 
-// }
+    i = 0;
+    j = 0;
+    if (it == 1)
+    {
+        printf("line >> {%s}\n", line);
+        info->map->width = ft_strlen(line);
+        info->map->height = 1;
+        info->map = malloc(sizeof(char *) * info->map_height);
+        info->map->map[0] = malloc(sizeof(char) * info->map_width);
+        while (line[i])
+        {
+            info->map->map[0][i] = line[i];
+            i++;
+        }
+    }
+    else
+    {
+        info->map->height++;
+        info->map->map = realloc(info->map, sizeof(char *) * info->map->height);
+        info->map->map[it - 1] = malloc(sizeof(char) * info->map->width);
+        while (line[i])
+        {
+            info->map->map[it - 1][i] = line[i];
+            i++;
+        }
+    }
+    // while (j < info->map_height)
+    // {
+    //     i = 0;
+    //     while (i < info->map_width)
+    //     {
+    //         printf("%c", info->map[j][i]);
+    //         i++;
+    //     }
+    //     printf("\n");
+    //     j++;
+    // }
+}
 
 void    parse_file(t_cube   *info)
 {
     char    *line;
-    // int     ret;
+    int     it;
 
-
+    it = 1;
     line = get_next_line(info->fd);
     while (line)
     {
@@ -94,8 +133,11 @@ void    parse_file(t_cube   *info)
         else
             free(line);
         line = get_next_line(info->fd);
-        // if (line[0] == '1' || line[0] == SPACE)
-        //     parse_map(info, line);
+        if (line[0] == '1' || line[0] == SPACE)
+        {
+            it++;
+            parse_map(info, line, it);
+        }
     }
     free(line);
     printf("NO {%s}\n", info->north);
