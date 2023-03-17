@@ -18,53 +18,45 @@ void    parse_texture(char *line, char **texture)
     *texture = ft_substr(line, i, j - i);
 }
 
-int    is_num(char c)
-{
-    if(c <= '0' && c >= '9')
-        return 1;
-    return 0;
-}
-
 void    parse_color(char *line, int *color)
 {
-    int     i;
-    int     j;
+    int     s;
+    int     e;
     int     r;
     int     g;
     int     b;
 
-    i = 0;
-    while (line[i] && line[i] != SPACE)
-        i++;
-    while (line[i] && line[i] == SPACE)
-        i++;
-    j = i;
-    while (line[j] && line[j] != ',' && is_num(line[j]))
-        j++;
-    // printf("i >>>>>>>>>>>>>{%d}\n", i);
-    // printf("j >>>>>>>>>>>>>{%d}\n", j);
-    if (!line[j])
+    s = 0;
+    while (line[s] && line[s] != SPACE)
+        s++;
+    while (line[s] && line[s] == SPACE)
+        s++;
+    // printf("line >> {%s}\n",&line[s]);
+    e = s;
+    while (line[e] && line[e] != ',' && ft_isdigit(line[e]))
+        e++;
+    // printf("e >>>>>>>>>>>>>{%d}\n", e);
+    if (!line[e])
         cub3d_error("Invalid file co");
-    r = ft_atoi(line + i);
-    i = j + 1;
-    j = i;
-    while (line[j] && line[j] != ',' && is_num(line[j]))
-        j++;
-    if (!line[j])
+    r = ft_atoi(line + s);
+    printf("r >>{%d}\n", r);
+    s = e + 1;
+    e = s;
+    while (line[e] && line[e] != ',' && ft_isdigit(line[e]))
+        e++;
+    if (!line[e])
         cub3d_error("Invalid file lo");
-    g = ft_atoi(line + i - 1);
+    g = ft_atoi(line + s);
+    printf("g >>{%d}\n", g);
 
-    i = j + 1;
-    j = i;
-    while (line[j] && line[j] != SPACE && is_num(line[j]))
-        j++;
-    printf("line : {%s}\n",line);
-    b = ft_atoi(line + i);
+    s = e + 1;
+    e = s;
+    while (line[e] && line[e] != SPACE  && ft_isdigit(line[e]))
+        e++;
+    b = ft_atoi(line + s);
+    printf("b >>{%d}\n", b);
         // if(line[j] == '\n')
         //     break;
-        printf("r >>{%d}\n", r);
-        printf("g >>{%d}\n", g);
-        printf("b >>{%d}\n", b);
     // if (line[j])
     //     cub3d_error("Invalid file rs");
     *color = (r << 16) | (g << 8) | b;
