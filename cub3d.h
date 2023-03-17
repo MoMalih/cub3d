@@ -29,7 +29,7 @@ typedef struct s_cube
     char    *east;
     int     floor;
     int     ceiling;
-    t_map   *map;
+    char    **map;
     int     map_width;
     int     map_height;
 }               t_cube;

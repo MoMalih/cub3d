@@ -39,6 +39,8 @@ void    parse_color(char *line, int *color)
     if (!line[e])
         cub3d_error("Invalid file co");
     r = ft_atoi(line + s);
+    if(r > 255 || r < 0)
+        cub3d_error("Invalid RGB PARAMETRE");
     printf("r >>{%d}\n", r);
     s = e + 1;
     e = s;
@@ -47,6 +49,8 @@ void    parse_color(char *line, int *color)
     if (!line[e])
         cub3d_error("Invalid file lo");
     g = ft_atoi(line + s);
+    if(g > 255 || g < 0)
+        cub3d_error("Invalid RGB PARAMETRE");
     printf("g >>{%d}\n", g);
 
     s = e + 1;
@@ -54,6 +58,8 @@ void    parse_color(char *line, int *color)
     while (line[e] && line[e] != SPACE  && ft_isdigit(line[e]))
         e++;
     b = ft_atoi(line + s);
+    if(b > 255 || b < 0)
+        cub3d_error("Invalid RGB PARAMETRE");
     printf("b >>{%d}\n", b);
         // if(line[j] == '\n')
         //     break;
@@ -71,45 +77,35 @@ void    parse_map(t_cube *info, char *line, int it)
     j = 0;
     if (it == 1)
     {
-        printf("line >> {%s}\n", line);
-        info->map->width = ft_strlen(line);
-        info->map->height = 1;
+        info->map_width = ft_strlen(line);
+        info->map_height = 1;
         info->map = malloc(sizeof(char *) * info->map_height);
-        info->map->map[0] = malloc(sizeof(char) * info->map_width);
+        info->map[0] = malloc(sizeof(char) * info->map_width);
         while (line[i])
         {
-            info->map->map[0][i] = line[i];
+            info->map[0][i] = line[i];
             i++;
         }
+        printf("width >> {%d}\n",info->map_width);
     }
     else
     {
-        info->map->height++;
-        info->map->map = realloc(info->map, sizeof(char *) * info->map->height);
-        info->map->map[it - 1] = malloc(sizeof(char) * info->map->width);
+        info->map_height++;
+        info->map = realloc(info->map, sizeof(char *) * info->map_height);
+        info->map[it - 1] = malloc(sizeof(char) * info->map_width);
         while (line[i])
         {
-            info->map->map[it - 1][i] = line[i];
+            info->map[it - 1][i] = line[i];
             i++;
         }
     }
-    // while (j < info->map_height)
-    // {
-    //     i = 0;
-    //     while (i < info->map_width)
-    //     {
-    //         printf("%c", info->map[j][i]);
-    //         i++;
-    //     }
-    //     printf("\n");
-    //     j++;
-    // }
 }
 
 void    parse_file(t_cube   *info)
 {
     char    *line;
     int     it;
+    // int     j;
 
     it = 1;
     line = get_next_line(info->fd);
@@ -129,23 +125,28 @@ void    parse_file(t_cube   *info)
                 parse_color(line, &info->floor);
             else if (line[0] == 'C')
                 parse_color(line, &info->ceiling);
+            else if (line[0] == '1' || line[0] == SPACE)
+                parse_map(info, line, it++);
         }
         else
             free(line);
         line = get_next_line(info->fd);
-        if (line[0] == '1' || line[0] == SPACE)
-        {
-            it++;
-            parse_map(info, line, it);
-        }
     }
     free(line);
-    printf("NO {%s}\n", info->north);
-    printf("SO {%s}\n", info->south);
-    printf("WE {%s}\n", info->west);
-    printf("EA {%s}\n", info->east);
-    printf("C {%d}\n", info->ceiling);
-    printf("F {%d}\n", info->floor);
+    // printf("NO {%s}\n", info->north);
+    // printf("SO {%s}\n", info->south);
+    // printf("WE {%s}\n", info->west);
+    // printf("EA {%s}\n", info->east);
+    // printf("C {%d}\n", info->ceiling);
+    // printf("F {%d}\n", info->floor);
+    // printf("height >> {%d}\n",info->map_height);
+    // printf("width >> {%d}\n", info->map_width);
+    // j = 0;
+    // while (j < info->map_height)
+    // {
+    //     printf("%s\n", info->map[j]);
+    //     j++;
+    // }
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");
