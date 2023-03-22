@@ -32,16 +32,16 @@ void    parse_color(char *line, int *color)
     while (line[s] && line[s] == SPACE)
         s++;
     // printf("line >> {%s}\n",&line[s]);
+    // printf("e >>>>>>>>>>>>>{%d}\n", e);
     e = s;
     while (line[e] && line[e] != ',' && ft_isdigit(line[e]))
         e++;
-    // printf("e >>>>>>>>>>>>>{%d}\n", e);
     if (!line[e])
         cub3d_error("Invalid file co");
     r = ft_atoi(line + s);
     if(r > 255 || r < 0)
         cub3d_error("Invalid RGB PARAMETRE");
-    printf("r >>{%d}\n", r);
+    // printf("r >>{%d}\n", r);
     s = e + 1;
     e = s;
     while (line[e] && line[e] != ',' && ft_isdigit(line[e]))
@@ -51,7 +51,7 @@ void    parse_color(char *line, int *color)
     g = ft_atoi(line + s);
     if(g > 255 || g < 0)
         cub3d_error("Invalid RGB PARAMETRE");
-    printf("g >>{%d}\n", g);
+    // printf("g >>{%d}\n", g);
 
     s = e + 1;
     e = s;
@@ -60,7 +60,7 @@ void    parse_color(char *line, int *color)
     b = ft_atoi(line + s);
     if(b > 255 || b < 0)
         cub3d_error("Invalid RGB PARAMETRE");
-    printf("b >>{%d}\n", b);
+    // printf("b >>{%d}\n", b);
         // if(line[j] == '\n')
         //     break;
     // if (line[j])
@@ -86,7 +86,7 @@ void    parse_map(t_cube *info, char *line, int it)
             info->map[0][i] = line[i];
             i++;
         }
-        printf("width >> {%d}\n",info->map_width);
+        // printf("width >> {%d}\n",info->map_width);
     }
     else
     {
@@ -128,25 +128,23 @@ void    parse_file(t_cube   *info)
             else if (line[0] == '1' || line[0] == SPACE)
                 parse_map(info, line, it++);
         }
-        else
-            free(line);
+        // else
+        //     free(line);
         line = get_next_line(info->fd);
     }
     free(line);
-    // printf("NO {%s}\n", info->north);
-    // printf("SO {%s}\n", info->south);
-    // printf("WE {%s}\n", info->west);
-    // printf("EA {%s}\n", info->east);
-    // printf("C {%d}\n", info->ceiling);
-    // printf("F {%d}\n", info->floor);
+    check_map(info);
+    // printf("NO {%s}", info->north);
+    // printf("SO {%s}", info->south);
+    // printf("WE {%s}", info->west);
+    // printf("EA {%s}", info->east);
+    // printf("C {%d}", info->ceiling);
+    // printf("F {%d}", info->floor);
     // printf("height >> {%d}\n",info->map_height);
     // printf("width >> {%d}\n", info->map_width);
-    // j = 0;
-    // while (j < info->map_height)
-    // {
-    //     printf("%s\n", info->map[j]);
-    //     j++;
-    // }
+    // j = -1;
+    // while (++j < info->map_height)
+    //     printf("line %d >> %s", j,info->map[j]);
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");

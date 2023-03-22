@@ -13,13 +13,6 @@
 // #define BUFFER_SIZE 1
 #define SPACE ' '
 
-typedef struct s_map
-{
-    char    **map;
-    int     width;
-    int     height;
-}               t_map;
-
 typedef struct s_cube
 {
     int     fd;
@@ -32,10 +25,10 @@ typedef struct s_cube
     char    **map;
     int     map_width;
     int     map_height;
-}               t_cube;
+}   t_cube;
 
 void    parse_file(t_cube   *info);
 void    cub3d_error(char *msg);
-
+void    check_map(t_cube    *info);
 
 #endif 
