@@ -15,11 +15,33 @@ void edge(char *line)
 
 }
 
-void    sides(char *line)
+int check_zero(char **map, int h, int w)
 {
-    printf("{%s}",line);
-        
-}
+    int i = 1;
+    int j, flag;
+
+    while (i < h - 1)
+    {
+        j = 1;
+        flag = 0;
+        while (j < w - 1)
+        {
+            if (map[i][j] == '0')
+            {
+                if (map[i - 1][j] == '0' || map[i + 1][j] == '0' || map[i][j - 1] == '0' || map[i][j + 1] == '0')
+                    flag = 1;
+                else
+                    return (0);
+            }
+            j++;
+        }
+        if (flag == 0)
+            return (0);
+        i++;
+    }
+    return (1);
+}     
+
 
 void check_map(t_cube   *info)
 {
@@ -38,7 +60,8 @@ void check_map(t_cube   *info)
         {
             if (info->map[i][j] && info->map[i][j] == '0')
             {
-                sides(&info->map[i][0]);
+                if(check_zero(info->map, info->map_height, info->map_width) == 0)
+                    cub3d_error("Map is not closed by walls.\n");
                 break;
             }
 
