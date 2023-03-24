@@ -75,6 +75,7 @@ void    parse_map(t_cube *info, char *line, int it)
 
     i = 0;
     j = 0;
+    // printf("{%s}\n",line);
     if (it == 1)
     {
         info->map_width = ft_strlen(line);
@@ -86,19 +87,61 @@ void    parse_map(t_cube *info, char *line, int it)
             info->map[0][i] = line[i];
             i++;
         }
+        info->map[0][i] = '\0';   
         // printf("width >> {%d}\n",info->map_width);
-    }
+    }   
     else
     {
         info->map_height++;
         info->map = realloc(info->map, sizeof(char *) * info->map_height);
-        info->map[it - 1] = malloc(sizeof(char) * info->map_width);
+        info->map[it - 1] = malloc(sizeof(char) * ft_strlen(line) + 1);
         while (line[i])
         {
             info->map[it - 1][i] = line[i];
             i++;
         }
+        info->map[it - 1][i] = '\0';   
     }
+}
+
+static int	search(char *set, char c)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*trim_nl(char *s1, char *set)
+{
+	int		start;
+	int		end;
+
+	if (set == NULL)
+		return ((char *)s1);
+	start = 0;
+	while (s1[start])
+	{
+		if (!(search(set, s1[start])))
+			break ;
+		start++;
+		if (start == ft_strlen((char *)s1))
+			return (ft_strdup(""));
+	}
+	end = (ft_strlen((char *)s1) - 1);
+	while (s1[end])
+	{
+		if (!(search(set, s1[end])))
+			break ;
+		end--;
+	}
+	return (ft_substr(s1, start, ((end + 1) - start)));
 }
 
 void    parse_file(t_cube   *info)
@@ -111,6 +154,8 @@ void    parse_file(t_cube   *info)
     line = get_next_line(info->fd);
     while (line)
     {
+        // printf("{%s}\n",ft_substr(line, 0 ,(ft_strlen(line) - 1)));
+        line = ft_substr(line, 0 ,(ft_strlen(line) - 1));
         if (ft_strlen(line) > 0 && line[0] != '\n')
         {
             if (line[0] == 'N' && line[1] == 'O')
@@ -128,23 +173,23 @@ void    parse_file(t_cube   *info)
             else if (line[0] == '1' || line[0] == SPACE)
                 parse_map(info, line, it++);
         }
-        // else
-        //     free(line);
+        else
+            free(line);
         line = get_next_line(info->fd);
     }
     free(line);
     check_map(info);
-    // printf("NO {%s}", info->north);
-    // printf("SO {%s}", info->south);
-    // printf("WE {%s}", info->west);
-    // printf("EA {%s}", info->east);
-    // printf("C {%d}", info->ceiling);
-    // printf("F {%d}", info->floor);
+    // printf("NO {%s}\n", info->north);
+    // printf("SO {%s}\n", info->south);
+    // printf("WE {%s}\n", info->west);
+    // printf("EA {%s}\n", info->east);
+    // printf("C {%d}\n", info->ceiling);
+    // printf("F {%d}\n", info->floor);
     // printf("height >> {%d}\n",info->map_height);
     // printf("width >> {%d}\n", info->map_width);
     // j = -1;
     // while (++j < info->map_height)
-    //     printf("line %d >> %s", j,info->map[j]);
+    //     printf("{%s}\n",&info->map[j][0]);
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");
