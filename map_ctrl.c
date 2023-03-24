@@ -15,57 +15,49 @@ void edge(char *line)
 
 }
 
-int check_zero(char **map, int h, int w)
+char	*fs_strchr(char *s, char c)
 {
-    int i = 1;
-    int j, flag;
+	int	i;
 
-    while (i < h - 1)
-    {
-        j = 1;
-        flag = 0;
-        while (j < w - 1)
-        {
-            if (map[i][j] == '0')
-            {
-                if (map[i - 1][j] == '0' || map[i + 1][j] == '0' || map[i][j - 1] == '0' || map[i][j + 1] == '0')
-                    flag = 1;
-                else
-                    return (0);
-            }
-            j++;
-        }
-        if (flag == 0)
-            return (0);
-        i++;
-    }
-    return (1);
-}     
-
+	i = 0;
+	while (s[i])
+		i++;
+	while (i > -1)
+	{
+		if (s[i] == c)
+			return ((char *)&s[i]);
+		i--;
+	}
+	return (0);
+}
 
 void check_map(t_cube   *info)
 {
     int i;
     int j;
+    char    *sp_line;
+
+
     if (info->map[0][0] && info->map[info->map_height - 1][0])
     {
         edge(&info->map[0][0]);
         edge(&info->map[info->map_height - 1][0]);
     }
-    i = -1;
-    while (++i < info->map_height && info->map[i][0])
+    i = 0;
+    while (++i < info->map_height)
     {
-        j = -1; 
-        while(++j < info->map_width && info->map[i][j])
+        j = 0;
+        while(info->map[i][j] == SPACE)
+            j++;
+        // printf("{%c}\n",info->map[i][j]);
+        // printf("{%c}\n",info->map[i][ft_strlen(&info->map[i][0]) -2]);
+        if ((sp_line = fs_strchr(&info->map[i][0], SPACE)))
         {
-            if (info->map[i][j] && info->map[i][j] == '0')
-            {
-                if(check_zero(info->map, info->map_height, info->map_width) == 0)
-                    cub3d_error("Map is not closed by walls.\n");
-                break;
-            }
+            // printf("{%s}", sp_line);
 
-        }
+        }    
+        else if (info->map[i][j] != '1' || info->map[i][ft_strlen(&info->map[i][0]) - 2] != '1')
+            cub3d_error("Map is not surrounded by walls.\n");
     }
 }
 
