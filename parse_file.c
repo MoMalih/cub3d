@@ -148,7 +148,7 @@ void    parse_file(t_cube   *info)
 {
     char    *line;
     int     it;
-    // int     j;
+    int     j;
 
     it = 1;
     line = get_next_line(info->fd);
@@ -179,17 +179,17 @@ void    parse_file(t_cube   *info)
     }
     free(line);
     check_map(info);
-    // printf("NO {%s}\n", info->north);
-    // printf("SO {%s}\n", info->south);
-    // printf("WE {%s}\n", info->west);
-    // printf("EA {%s}\n", info->east);
-    // printf("C {%d}\n", info->ceiling);
-    // printf("F {%d}\n", info->floor);
-    // printf("height >> {%d}\n",info->map_height);
-    // printf("width >> {%d}\n", info->map_width);
-    // j = -1;
-    // while (++j < info->map_height)
-    //     printf("{%s}\n",&info->map[j][0]);
+    printf("NO {%s}\n", info->north);
+    printf("SO {%s}\n", info->south);
+    printf("WE {%s}\n", info->west);
+    printf("EA {%s}\n", info->east);
+    printf("C {%d}\n", info->ceiling);
+    printf("F {%d}\n", info->floor);
+    printf("height >> {%d}\n",info->map_height);
+    printf("width >> {%d}\n", info->map_width);
+    j = -1;
+    while (++j < info->map_height)
+        printf("{%s}\n",&info->map[j][0]);
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");
