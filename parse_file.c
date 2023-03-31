@@ -71,51 +71,54 @@ void    parse_color(char *line, int *color)
 void    parse_map(t_cube *info, char *line, int it)
 {
     int     i;
-    int     j;
 
-    i = 0;
-    j = 0;
-    // printf("{%s}\n",line);
+    i = -1;
     if (it == 1)
     {
         info->map_width = ft_strlen(line);
         info->map_height = 1;
         info->map = malloc(sizeof(char *) * info->map_height);
         info->map[0] = malloc(sizeof(char) * info->map_width);
-        while (line[i])
-        {
+        while (line[++i])
             info->map[0][i] = line[i];
-            i++;
-        }
         info->map[0][i] = '\0';   
-        // printf("width >> {%d}\n",info->map_width);
     }   
     else
     {
         info->map_height++;
         info->map = realloc(info->map, sizeof(char *) * info->map_height);
         info->map[it - 1] = malloc(sizeof(char) * ft_strlen(line) + 1);
-        while (line[i])
-        {
+        while (line[++i])
             info->map[it - 1][i] = line[i];
-            i++;
-        }
         info->map[it - 1][i] = '\0';   
     }
 }
 
+int    set_width(char **map, int height)
+{
+    int it1;
+    int w;
+
+    it1 = -1;
+    w = 0;
+    while(++it1 < height)
+    {
+        if(ft_strlen(&map[it1][0]) > w)
+            w = ft_strlen(&map[it1][0]);
+    }
+    return (w);
+}
 
 void    parse_file(t_cube   *info)
 {
     char    *line;
     int     it;
-    // int     j;
+    int     j;
 
     it = 1;
     line = get_next_line(info->fd);
     while (line)
     {
-        // printf("{%s}\n",ft_substr(line, 0 ,(ft_strlen(line) - 1)));
         line = ft_substr(line, 0 ,(ft_strlen(line) - 1));
         if (ft_strlen(line) > 0 && line[0] != '\n')
         {
@@ -139,6 +142,8 @@ void    parse_file(t_cube   *info)
         line = get_next_line(info->fd);
     }
     free(line);
+    info->map_width = set_width(info->map, info->map_height);
+    complete_map(info);
     check_map(info);
     // printf("NO {%s}\n", info->north);
     // printf("SO {%s}\n", info->south);
@@ -148,9 +153,9 @@ void    parse_file(t_cube   *info)
     // printf("F {%d}\n", info->floor);
     // printf("height >> {%d}\n",info->map_height);
     // printf("width >> {%d}\n", info->map_width);
-    // j = -1;
-    // while (++j < info->map_height)
-    //     printf("{%s}\n",&info->map[j][0]);
+    j = -1;
+    while (++j < info->map_height)
+        printf("{%s}\n",&info->map[j][0]);
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");
