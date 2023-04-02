@@ -13,6 +13,7 @@
 // #define BUFFER_SIZE 1
 #define SPACE ' '
 
+
 typedef struct s_cube
 {
     int     fd;

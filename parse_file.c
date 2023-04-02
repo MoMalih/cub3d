@@ -109,6 +109,22 @@ int    set_width(char **map, int height)
     return (w);
 }
 
+// void    complete_map(t_cube *info)
+// {
+//     int it1;
+//     int it2;
+
+//     it1 = -1;
+//     while(++it1 < info->map_height && info->map[it1][0])
+//     {
+//         it2 = ft_strlen(&info->map[it1][0]);
+//         // printf("it2: {%d}\n", it2);
+//         while(++it2 <= info->map_width)
+//             info->map[it1][it2] = ' ';
+//         info->map[it1][it2 + 1] = '\0';
+//     }
+// }
+
 void    parse_file(t_cube   *info)
 {
     char    *line;
@@ -142,8 +158,9 @@ void    parse_file(t_cube   *info)
         line = get_next_line(info->fd);
     }
     free(line);
+    // printf("width >>1 {%d}\n", info->map_width);
     info->map_width = set_width(info->map, info->map_height);
-    complete_map(info);
+    // to do >> complete_map(info);
     check_map(info);
     // printf("NO {%s}\n", info->north);
     // printf("SO {%s}\n", info->south);
@@ -153,7 +170,7 @@ void    parse_file(t_cube   *info)
     // printf("F {%d}\n", info->floor);
     // printf("height >> {%d}\n",info->map_height);
     // printf("width >> {%d}\n", info->map_width);
-    j = -1;
+    j = -1; 
     while (++j < info->map_height)
         printf("{%s}\n",&info->map[j][0]);
 }

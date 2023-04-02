@@ -83,12 +83,39 @@ void    space_check(t_cube  *info, int i)
     }
 }
 
+void inputs(t_cube *info)
+{
+    int it;
+    int it1;
+    int flag;
+
+    it = -1;
+    flag = 0;
+    while(++it < info->map_height)
+    {
+        it1 = -1;
+        while(++it1 <= ft_strlen(&info->map[it][0]) && info->map[it][it1])
+        {
+            if (info->map[it][it1] == 'N' || info->map[it][it1] == 'E'
+                || info->map[it][it1] == 'W' || info->map[it][it1] == 'S')
+                flag = 1;
+            else
+            {
+                if (info->map[it][it1] != '0' && info->map[it][it1] != '1' 
+                    && info->map[it][it1] != ' ' )
+                    cub3d_error("undefined char on map");
+            }
+        }
+    }
+    if(!flag)
+        cub3d_error("please add a player");
+}
+
 void check_map(t_cube   *info)
 {
     int i;
-    // int j;
 
-
+    inputs(info);
     if (info->map[0][0] && info->map[info->map_height - 1][0])
     {
         edge(&info->map[0][0]);
@@ -104,12 +131,6 @@ void check_map(t_cube   *info)
             if (info->map[i][0] != '1' || info->map[i][ft_strlen(&info->map[i][0]) - 1] != '1')
                 cub3d_error("Map is not surrounded by walls.\n");
         }
-
-        // j = 0;
-        // while(info->map[i][j] == SPACE)
-        //     j++;
-        // printf("{%s}\n", &info->map[i][j]);
-        // printf("{%d}\n", ft_strlen(&info->map[i][j]));
     }
 }
 
