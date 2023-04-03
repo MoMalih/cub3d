@@ -34,16 +34,17 @@ char	*fs_strchr(char *s, char c)
 void    search_r(char **map, int h, int w)
 {
     while (map[h][++w] == ' ');
+    // printf("rr {%c}\n", map[h][w]);
 
-    if (h > 0 && w >= 0 && map[h][w] != '1')
-        cub3d_error("Map is not closed/surrounded by walls.\n");
+    if (h > 0 && w >= 0 && map[h][w] != '1' && map[h][w] != '\0')
+        cub3d_error("Map is not {r} closed/surrounded by walls.\n");
 }
 
 void    search_l(char **map, int h, int w)
 {
     while (map[h][--w] == ' ' && w >= 0);
     // printf("ll {%c}\n", map[h][w]);
-    if (h > 0 && w >= 0 && map[h][w] != '1')
+    if (h > 0 && w >= 0 && map[h][w] != '1' && map[h][w] != '\0')
         cub3d_error("Map is not closed/surrounded by walls.\n");
 }
 
@@ -124,13 +125,13 @@ void check_map(t_cube   *info)
     i = -1;
     while (++i < info->map_height)
     {
-        if (fs_strchr(&info->map[i][0], SPACE))
+        else if (fs_strchr(&info->map[i][0], SPACE))
             space_check(info, i);
-        else
-        {
-            if (info->map[i][0] != '1' || info->map[i][ft_strlen(&info->map[i][0]) - 1] != '1')
-                cub3d_error("Map is not surrounded by walls.\n");
-        }
+        // if (info->map[i][0] != '1' || info->map[i][ft_strlen(&info->map[i][0]) - 1] != '1')
+        //     cub3d_error("Map is not surrounded by walls.\n");
+        // else
+        // {
+        // }
     }
 }
 
