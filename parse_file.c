@@ -86,7 +86,7 @@ void    parse_map(t_cube *info, char *line, int it)
     else
     {
         info->map_height++;
-        info->map = realloc(info->map, sizeof(char *) * info->map_height);
+        info->map = ft_realloc(info->map, sizeof(char *) * info->map_height);
         info->map[it - 1] = malloc(sizeof(char) * ft_strlen(line) + 1);
         while (line[++i])
             info->map[it - 1][i] = line[i];
@@ -120,7 +120,7 @@ void    complete_map(t_cube *info)
         if(ft_strlen(info->map[it]) < info->map_width)
         {
             // info->map = realloc(info->map, sizeof(char *) * info->map_height);
-            info->map[it] = realloc(info->map[it], sizeof(char) * info->map_width);
+            info->map[it] = ft_realloc(info->map[it], sizeof(char) * info->map_width);
             it1 = ft_strlen(info->map[it]) - 1;
             while (++it1 < info->map_width)
                 info->map[it][it1] = ' ';
@@ -176,9 +176,9 @@ void    parse_file(t_cube   *info)
     // printf("F {%d}\n", info->floor);
     // printf("height >> {%d}\n",info->map_height);
     // printf("width >> {%d}\n", info->map_width);
-    j = -1; 
-    while (++j < info->map_height)
-        printf("{%s}\n",&info->map[j][0]);
+    // j = -1; 
+    // while (++j < info->map_height)
+    //     printf("{%s}\n",&info->map[j][0]);
 }
     // if (line == -1)
     //     cub3d_error("Invalid file");

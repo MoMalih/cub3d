@@ -31,5 +31,5 @@ typedef struct s_cube
 void    parse_file(t_cube   *info);
 void    cub3d_error(char *msg);
 void    check_map(t_cube    *info);
-
+void    *ft_realloc(void *ptr, size_t size);
 #endif 
