@@ -4,7 +4,7 @@ CC= gcc
 
 CFLAGS= -Wall -Wextra -Werror
 
-SRC= cub3d.c parse_file.c map_ctrl.c utils.c
+SRC= cub3d.c parse_file.c map_ctrl.c utils.c parse_helper.c
 
 OBJ = $(SRC:.c=.o)
 
